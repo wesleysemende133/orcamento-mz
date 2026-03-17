@@ -5,7 +5,7 @@ services:
     environment:
       POSTGRES_DB: orcamento_mz
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: sua_senha_segura_123
+      POSTGRES_PASSWORD: hercio.123          # ← muda esta senha se quiseres
     ports:
       - "5432:5432"
     volumes:
@@ -13,7 +13,7 @@ services:
 
   backend:
     build:
-      context: .
+      context: .                    # raiz do projeto
       dockerfile: Dockerfile.backend
     restart: always
     ports:
@@ -21,28 +21,11 @@ services:
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/orcamento_mz
       SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: hercio.123
+      SPRING_DATASOURCE_PASSWORD: hercio.123   # ← tem de ser IGUAL à de cima
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_PROFILES_ACTIVE: dev
     depends_on:
       - db
-    networks:
-      - orcamento-net
-
-  frontend:
-    build:
-      context: .
-      dockerfile: Dockerfile.frontend
-    restart: always
-    ports:
-      - "80:80"
-    depends_on:
-      - backend
-    networks:
-      - orcamento-net
-
-networks:
-  orcamento-net:
-    driver: bridge
 
 volumes:
   postgres_data:
