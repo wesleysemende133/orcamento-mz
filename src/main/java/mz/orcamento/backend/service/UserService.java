@@ -7,21 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class UserService {
-
     @Autowired
     private UserRepository userRepository;
-
-    public List<UserDTO> getAllUSers() {
-        List<User> users = userRepository.findAll();
-        return users
-                .stream()
-                .map(User::convert)
-                .collect(Collectors.toList());
-    }
-
 
 }
