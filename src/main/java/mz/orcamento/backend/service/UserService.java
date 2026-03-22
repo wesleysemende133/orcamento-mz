@@ -12,6 +12,11 @@ import mz.orcamento.backend.repository.MunicipioRepository;
 import mz.orcamento.backend.repository.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+<<<<<<< HEAD
+=======
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+>>>>>>> 1e05850 (novas atualizacoes)
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -98,4 +103,32 @@ import org.springframework.transaction.annotation.Transactional;
                     )
             );
         }
+<<<<<<< HEAD
+=======
+        /**
+         •	buscarPerfil: Retornar os dados do usuário logado para o frontend.
+         */
+        public UserResponseDTO buscarPerfil() {
+            // 1. Recupera o objeto de autenticação do contexto do Spring Security
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+            if (authentication == null || !authentication.isAuthenticated()) {
+                throw new RuntimeException("Utilizador não autenticado.");
+            }
+
+            // 2. O Principal contém a nossa entidade User (que implementa UserDetails)
+            User user = (User) authentication.getPrincipal();
+
+            // 3. Retorna a projeção segura (DTO)
+            return new UserResponseDTO(
+                    user.getId(),
+                    user.getNomeUsuario(),
+                    user.getEmail(),
+                    user.getNumeroBI(),
+                    user.getTelefone(),
+                    user.getMunicipio().getNomeAutarquia(),
+                    user.getPerfilAcesso().name()
+            );
+        }
+>>>>>>> 1e05850 (novas atualizacoes)
     }
