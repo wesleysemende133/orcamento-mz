@@ -19,5 +19,5 @@ public interface UserRepository extends JpaRepository<User, UUID> { // CORREÇÃ
     UserDetails findUserDetailsByEmail(String email);
 
     // Busca flexível: encontra "João" mesmo se pesquisar "joao"
-    List<User> findByNomeContainingIgnoreCase(String nome);
+    List<User> findByNomeUsuarioContainingIgnoreCase(String nomeUsuario);
 }

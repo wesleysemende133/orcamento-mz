@@ -13,22 +13,18 @@ import java.util.UUID;
 @Repository
 public interface ReceitaRepository extends JpaRepository<Receita, UUID> {
 
-    // Busca receitas por uma categoria específica (ex: Taxas de Lixo, Imposto Predial)
-    List<Receita> findByCategoriaId(UUID categoriaId);
+    // Alterado de findByOrcamentoId para findByOrcamentoIdOrcamento
+    // O Spring agora vai procurar 'idOrcamento' dentro da classe Orcamento
+    List<Receita> findByOrcamentoIdOrcamento(UUID orcamentoId);
 
-    // Busca receitas por período para relatórios de arrecadação mensal
     @Query("SELECT r FROM Receita r WHERE " +
-            "(:mes IS NULL OR MONTH(r.dataArrecadacao) = :mes) AND " +
-            "(:ano IS NULL OR YEAR(r.dataArrecadacao) = :ano)")
+            "(:mes IS NULL OR MONTH(r.dataArrecadado) = :mes) AND " +
+            "(:ano IS NULL OR YEAR(r.dataArrecadado) = :ano)")
     List<Receita> buscarPorPeriodo(@Param("mes") Integer mes, @Param("ano") Integer ano);
 
-    // Soma total arrecadada por categoria (Útil para gráficos no React)
-    @Query("SELECT SUM(r.valorReceita) FROM Receita r WHERE r.categoria.id = :categoriaId")
-    java.math.BigDecimal somarTotalPorCategoria(@Param("categoriaId") UUID categoriaId);
+    @Query("SELECT SUM(r.valorArrecado) FROM Receita r WHERE r.tipoReceita = :tipo")
+    BigDecimal somarTotalPorTipo(@Param("tipo") Receita.TipoReceita tipo);
 
-
-    ///Para Relatorio Service
     @Query("SELECT SUM(r.valorArrecado) FROM Receita r WHERE MONTH(r.dataArrecadado) = :mes AND YEAR(r.dataArrecadado) = :ano")
     BigDecimal somarReceitasPorMes(@Param("mes") int mes, @Param("ano") int ano);
-
 }

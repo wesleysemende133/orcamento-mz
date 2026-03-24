@@ -33,7 +33,7 @@ public class UserController {
     }
 
     // Criar um novo utilizador (Ex: Novo funcionário das Finanças)
-    @PostMapping
+    @PostMapping("/registrar")
     public ResponseEntity<User> criar(@RequestBody @Valid User user) {
         // Nota: Numa aplicação real, aqui faríamos o hash da password
         User novoUsuario = userRepository.save(user);

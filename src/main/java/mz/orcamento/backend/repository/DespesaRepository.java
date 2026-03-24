@@ -13,25 +13,23 @@ import java.util.UUID;
 @Repository
 public interface DespesaRepository extends JpaRepository<Despesa, UUID> {
 
-    // Busca despesas por uma categoria específica (ex: todas as despesas da Saúde)
-    List<Despesa> findByCategoriaId(UUID categoriaId);
+    // CORRIGIDO: de findByCategoriaId para findByCategoriaIdCategoria
+    List<Despesa> findByCategoriaIdCategoria(UUID categoriaId);
 
-    // Busca despesas pelo NUIT do fornecedor para auditoria de contratos
     List<Despesa> findByNuitFornecedor(String nuitFornecedor);
 
-    // Query customizada para o histórico com filtros (Mês e Ano)
     @Query("SELECT d FROM Despesa d WHERE " +
             "(:mes IS NULL OR MONTH(d.dataCriacao) = :mes) AND " +
             "(:ano IS NULL OR YEAR(d.dataCriacao) = :ano) AND " +
-            "(:categoriaId IS NULL OR d.categoria.id = :categoriaId)")
+            "(:categoriaId IS NULL OR d.categoria.idCategoria = :categoriaId)") // CORRIGIDO: .id para .idCategoria
     List<Despesa> buscarComFiltros(@Param("mes") Integer mes,
                                    @Param("ano") Integer ano,
                                    @Param("categoriaId") UUID categoriaId);
 
-    ///Para Relatorio Service
     @Query("SELECT SUM(d.valorDespesa) FROM Despesa d WHERE MONTH(d.dataCriacao) = :mes AND YEAR(d.dataCriacao) = :ano")
     BigDecimal somarDespesasPorMes(@Param("mes") int mes, @Param("ano") int ano);
 
     @Query("SELECT SUM(d.valorDespesa) FROM Despesa d WHERE d.categoria.idCategoria = :idCategoria")
     BigDecimal somarTotalPorCategoria(@Param("idCategoria") UUID idCategoria);
 }
+

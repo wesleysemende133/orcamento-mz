@@ -2,6 +2,7 @@ package mz.orcamento.backend.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.UUID;
@@ -9,6 +10,7 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class Municipio {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -21,7 +23,7 @@ public class Municipio {
     private String provincia;
 
     @Column(unique = true,nullable = false, length = 9)
-    private String nuitIntitucional;
+    private String nuitInstitucional;
 
     private Integer populacaoEstimada;
 

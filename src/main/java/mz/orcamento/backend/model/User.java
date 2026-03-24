@@ -2,6 +2,7 @@ package mz.orcamento.backend.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,8 +15,10 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
+@Table(name = "usuarios")
 @Getter
 @Setter
+@NoArgsConstructor
 public class User implements UserDetails {
 
     @Id

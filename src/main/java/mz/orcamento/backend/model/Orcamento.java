@@ -2,6 +2,7 @@ package mz.orcamento.backend.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
@@ -10,6 +11,7 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class Orcamento {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

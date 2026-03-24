@@ -29,21 +29,12 @@ public class SecurityConfigurations {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .csrf(csrf -> csrf.disable()) // Desativado pois o JWT protege contra CSRF
+                .csrf(csrf -> csrf.disable())
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(req -> {
-                    // Endpoints Públicos
-                    req.requestMatchers(HttpMethod.POST, "/auth/login").permitAll();
-                    req.requestMatchers(HttpMethod.POST, "/auth/registrar").permitAll();
-
-                    // Endpoints Restritos por Perfil (RBAC)
-                    req.requestMatchers("/api/orcamentos/**").hasAnyRole("ADMINISTRADOR_SISTEMA", "GESTOR_FINANCEIRO");
-                    req.requestMatchers("/api/auditoria/**").hasRole("AUDITOR_EXTERNO");
-
-                    // Qualquer outra requisição deve ser autenticada
-                    req.anyRequest().authenticated();
+                    // Libera TUDO temporariamente para teste
+                    req.anyRequest().permitAll();
                 })
-                // Adiciona o nosso filtro de Token antes do filtro de autenticação padrão do Spring
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

@@ -2,6 +2,7 @@ package mz.orcamento.backend.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import mz.orcamento.backend.dto.receita.ReceitaRequestDTO;
 
@@ -12,6 +13,7 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class Receita {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
