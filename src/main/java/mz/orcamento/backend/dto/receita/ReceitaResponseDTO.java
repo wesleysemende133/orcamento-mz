@@ -1,14 +1,28 @@
 package mz.orcamento.backend.dto.receita;
 
+import mz.orcamento.backend.model.Receita;
+import mz.orcamento.backend.model.Receita.TipoReceita;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
 public record ReceitaResponseDTO(
-        UUID id,
-        String descricao,
-        BigDecimal valor,
-        LocalDate data,
-        String nomeCategoria, // Para exibir "Salário", "Freelance", etc. sem novo fetch
-        String corCategoria    // Para estilizar o badge ou ícone no Dashboard
-) {}
+        UUID idReceita,
+        BigDecimal valorArrecado,
+        LocalDate dataArrecadado,
+        TipoReceita tipoReceita,
+        String comprovativoDepositoUrl,
+        UUID orcamentoId
+) {
+    // ESTE É O CONSTRUTOR QUE O SERVICE CHAMA: new ReceitaResponseDTO(novaReceita)
+    public ReceitaResponseDTO(Receita receita) {
+        this(
+                receita.getIdReceita(),
+                receita.getValorArrecado(),
+                receita.getDataArrecadado(),
+                receita.getTipoReceita(),
+                receita.getComprovativoDepositoUrl(),
+                receita.getOrcamento().getIdOrcamento()
+        );
+    }
+}

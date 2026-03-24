@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,4 +27,11 @@ public interface DespesaRepository extends JpaRepository<Despesa, UUID> {
     List<Despesa> buscarComFiltros(@Param("mes") Integer mes,
                                    @Param("ano") Integer ano,
                                    @Param("categoriaId") UUID categoriaId);
+
+    ///Para Relatorio Service
+    @Query("SELECT SUM(d.valorDespesa) FROM Despesa d WHERE MONTH(d.dataCriacao) = :mes AND YEAR(d.dataCriacao) = :ano")
+    BigDecimal somarDespesasPorMes(@Param("mes") int mes, @Param("ano") int ano);
+
+    @Query("SELECT SUM(d.valorDespesa) FROM Despesa d WHERE d.categoria.idCategoria = :idCategoria")
+    BigDecimal somarTotalPorCategoria(@Param("idCategoria") UUID idCategoria);
 }
