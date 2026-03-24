@@ -3,6 +3,7 @@ package mz.orcamento.backend.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import mz.orcamento.backend.dto.categoria.CategoriaRequestDTO;
 
 
 import java.math.BigDecimal;
@@ -21,7 +22,7 @@ public class Categoria {
     private Orcamento orcamento;
 
     @Column(nullable = false)
-    private String classisficadorFuncional;
+    private String classificadorFuncional;
 
     @Column(nullable = false)
     private String codigoRubrica;
@@ -34,4 +35,14 @@ public class Categoria {
 
     @Column(columnDefinition = "TEXT")
     private String justificativaImpacto;
+
+    private boolean status;
+
+    public Categoria(CategoriaRequestDTO dto) {
+        this.classificadorFuncional = dto.classificadorFuncional();
+        this.codigoRubrica = dto.codigoRubrica();
+        this.dotacaoInicial = dto.dotacaoInicial();
+        this.justificativaImpacto = dto.justificativaImpacto();
+        this.status = true; // Toda nova categoria nasce "Ativa"
+    }
 }

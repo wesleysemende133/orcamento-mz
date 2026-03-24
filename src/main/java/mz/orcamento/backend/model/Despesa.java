@@ -2,7 +2,10 @@ package mz.orcamento.backend.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import mz.orcamento.backend.dto.despesa.DespesaRequestDTO;
+
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -43,9 +46,28 @@ public class Despesa {
     @Column(nullable = false)
     private FaseExecucao faseExecucao;
 
+    private LocalDateTime dataCriacao;
+
     public enum FaseExecucao {
         CABIMENTACAO, // Reserva do valor
         LIQUIDACAO,   // Verificação da fatura/serviço
         PAGAMENTO     // Saída do dinheiro
+    }
+    public Despesa(DespesaRequestDTO dto, Categoria categoria, User autorizador) {
+        this.categoria = categoria;
+        this.usuarioAutorizador = autorizador;
+        this.descricaoFinalidade = dto.descricaoFinalidade();
+        this.valorDespesa = dto.valorDespesa();
+        this.nuitFornecedor = dto.nuitFornecedor();
+        this.nomeFornecedor = dto.nomeFornecedor();
+        this.coordenadasGeograficas = dto.coordenadasGeograficas();
+        this.anexoFaturaUrl = dto.anexoFaturaUrl();
+        this.anexoContratoUrl = dto.anexoContratoUrl();
+
+        // Regra de Negócio: Toda despesa nova em Moçambique começa no Cabimento
+        this.faseExecucao = FaseExecucao.CABIMENTACAO;
+
+        // Data de registo no sistema
+        this.dataCriacao = LocalDateTime.now();
     }
 }

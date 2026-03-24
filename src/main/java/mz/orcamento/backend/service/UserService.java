@@ -12,11 +12,8 @@ import mz.orcamento.backend.repository.MunicipioRepository;
 import mz.orcamento.backend.repository.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-<<<<<<< HEAD
-=======
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
->>>>>>> 1e05850 (novas atualizacoes)
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -103,8 +100,7 @@ import org.springframework.transaction.annotation.Transactional;
                     )
             );
         }
-<<<<<<< HEAD
-=======
+
         /**
          •	buscarPerfil: Retornar os dados do usuário logado para o frontend.
          */
@@ -130,5 +126,4 @@ import org.springframework.transaction.annotation.Transactional;
                     user.getPerfilAcesso().name()
             );
         }
->>>>>>> 1e05850 (novas atualizacoes)
     }
