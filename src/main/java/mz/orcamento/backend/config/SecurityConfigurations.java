@@ -32,8 +32,19 @@ public class SecurityConfigurations {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(req -> {
-                    // Libera TUDO temporariamente para teste
-                    req.anyRequest().permitAll();
+                    // 1. O Login e o Registro de novos usuários (públicos por enquanto)
+                    req.requestMatchers(HttpMethod.POST, "/api/usuarios/login").permitAll();
+                    req.requestMatchers(HttpMethod.POST, "/api/usuarios/registrar").permitAll();
+                    req.requestMatchers(HttpMethod.DELETE, "/api/usuarios/**").hasRole("ADMINISTRADOR_SISTEMA");
+
+                    // 2. Criação de Municípios: Só quem é ADMIN pode fazer
+                    req.requestMatchers(HttpMethod.POST, "/api/municipios").permitAll();///depois atualizar para que apenas o ADM do sistema crie
+
+                    // 3. Orçamentos: Só ADMIN ou GESTOR_FINANCEIRO podem criar/editar
+                    req.requestMatchers(HttpMethod.POST, "/api/orcamentos/**").hasAnyRole("ADMINISTRADOR_SISTEMA", "GESTOR_FINANCEIRO");
+
+                    // 4. Todo o resto exige estar logado (Token válido)
+                    req.anyRequest().authenticated();
                 })
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

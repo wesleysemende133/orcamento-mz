@@ -34,15 +34,19 @@ public class SecurityFilter extends OncePerRequestFilter {
 
         if (token != null) {
             var email = tokenService.validateToken(token);
-            UserDetails user = userRepository.findByEmail(email)
-                    .orElseThrow(() -> new RuntimeException("Utilizador não encontrado no contexto do Token"));
 
-            // Autentica o utilizador no contexto do Spring Security para esta requisição
-            var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+            // CORREÇÃO: Usamos findByEmail sem lançar Exception aqui.
+            // Se não encontrar, o 'user' será null e o IF de autenticação não roda.
+            var userOptional = userRepository.findByEmail(email);
+
+            if (userOptional.isPresent()) {
+                var user = userOptional.get();
+                var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
         }
 
-        // Continua a execução para o próximo filtro ou para o Controller
+        // Garante que a requisição continue para o próximo filtro ou Controller
         filterChain.doFilter(request, response);
     }
 
