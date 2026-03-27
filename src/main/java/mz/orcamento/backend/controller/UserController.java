@@ -1,6 +1,5 @@
 package mz.orcamento.backend.controller;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import mz.orcamento.backend.model.User;
 import mz.orcamento.backend.repository.MunicipioRepository;
