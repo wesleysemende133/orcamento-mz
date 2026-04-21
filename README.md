@@ -34,6 +34,7 @@ __📈 Impacto e Objetivos__
 O projeto visa reduzir erros administrativos e promover a transparência pública em Moçambique, fornecendo uma base tecnológica escalável para futuras integrações com sistemas nacionais.
 
 __Autor__
-Wesley Agnaldo Semende 
+Wesley Agnaldo Semende
+
 *Instituição:* ISGEGM - Instituto Superior de Gestão e Empreendedorismo Gwaza Muthini.
 *Ano:* 2026
