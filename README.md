@@ -35,6 +35,6 @@ O projeto visa reduzir erros administrativos e promover a transparência públic
 
 __Autor__
 Wesley Agnaldo Semende
+__Instituição:__ ISGEGM - Instituto Superior de Gestão e Empreendedorismo Gwaza Muthini.
 
-*Instituição:* ISGEGM - Instituto Superior de Gestão e Empreendedorismo Gwaza Muthini.
-*Ano:* 2026
+__Ano:__ 2026
