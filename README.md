@@ -1,4 +1,4 @@
-___*Orçamento MZ - Plataforma de Gestão Orçamental Municipal*__
+__*Orçamento MZ - Plataforma de Gestão Orçamental Municipal*__
 
 O Orçamento MZ é uma plataforma web para gestão orçamental municipal. Foi desenvolvida para melhorar a transparência, a eficiência administrativa e o controlo financeiro em municípios moçambicanos.
 
