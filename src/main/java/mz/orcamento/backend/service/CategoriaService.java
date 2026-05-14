@@ -3,7 +3,7 @@ package mz.orcamento.backend.service;
 import lombok.RequiredArgsConstructor;
 import mz.orcamento.backend.dto.categoria.CategoriaRequestDTO;
 import mz.orcamento.backend.dto.categoria.CategoriaResponseDTO;
-import mz.orcamento.backend.exepion.BusinessExepion; // Verifique se o nome da pasta é 'exepion' ou 'exception'
+import mz.orcamento.backend.exepion.BusinessExeption; // Verifique se o nome da pasta é 'exepion' ou 'exception'
 import mz.orcamento.backend.model.Categoria;
 import mz.orcamento.backend.repository.CategoriaRepository;
 import org.springframework.stereotype.Service;
@@ -14,13 +14,13 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class CategoriaSevice {
+public class CategoriaService {
     private final CategoriaRepository categoriaRepository;
 
     @Transactional
     public CategoriaResponseDTO criar(CategoriaRequestDTO dto) {
         if (categoriaRepository.existsByClassificadorFuncionalIgnoreCase(dto.classificadorFuncional())) {
-            throw new BusinessExepion("Este classificador funcional ja se encontra registado");
+            throw new BusinessExeption("Este classificador funcional ja se encontra registado");
         }
 
         Categoria novaCategoria = new Categoria(dto);

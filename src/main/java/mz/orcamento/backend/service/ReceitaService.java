@@ -1,19 +1,18 @@
 package mz.orcamento.backend.service;
 
-import lombok.RequiredArgsConstructor;
-import mz.orcamento.backend.dto.receita.ReceitaRequestDTO;
-import mz.orcamento.backend.dto.receita.ReceitaResponseDTO;
-import mz.orcamento.backend.exepion.BusinessExepion;
-import mz.orcamento.backend.model.Categoria;
-import mz.orcamento.backend.model.Orcamento;
-import mz.orcamento.backend.model.Receita;
-import mz.orcamento.backend.repository.CategoriaRepository;
-import mz.orcamento.backend.repository.OrcamentoRepository;
-import mz.orcamento.backend.repository.ReceitaRepository;
+import java.math.BigDecimal;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
+import lombok.RequiredArgsConstructor;
+import mz.orcamento.backend.dto.receita.ReceitaRequestDTO;
+import mz.orcamento.backend.dto.receita.ReceitaResponseDTO;
+import mz.orcamento.backend.exepion.BusinessExeption;
+import mz.orcamento.backend.model.Orcamento;
+import mz.orcamento.backend.model.Receita;
+import mz.orcamento.backend.repository.OrcamentoRepository;
+import mz.orcamento.backend.repository.ReceitaRepository;
 
 @Service
 @RequiredArgsConstructor
@@ -25,7 +24,7 @@ public class ReceitaService {
     public ReceitaResponseDTO salvarReceita(ReceitaRequestDTO dto) {
         // 1. Buscar o Orcamento usando o seu modelo
         Orcamento orcamento = orcamentoRepository.findById(dto.orcamentoId())
-                .orElseThrow(() -> new BusinessExepion("Orçamento não encontrado."));
+                .orElseThrow(() -> new BusinessExeption("Orçamento não encontrado."));
 
         // 2. Criar a Receita (usando o seu modelo original de Receita)
         Receita novaReceita = new Receita(dto, orcamento);
